@@ -38,5 +38,12 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DependencyInjector.cs" />
+    <Compile Include="IDependencyInjector.cs" />
+    <Compile Include="InjectAttribute.cs" />
+    <Compile Include="IContainer.cs" />
+    <Compile Include="Container.cs" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
