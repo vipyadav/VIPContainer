@@ -14,7 +14,7 @@ namespace VIPContainerConsoleDemo
             var container = new Container();
           
             // register types
-            container.Register<ICustomerRepository, CustomerRepository>();
+            container.Register<ICustomerRepository, CustomerRepository>().;
             container.Register<ILogger, ConsoleLogger>();
 
             var repo = container.Resolve<ICustomerRepository>();

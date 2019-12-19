@@ -9,7 +9,7 @@ namespace VIPContainer
     public class Container : IContainer
     {
         private Dictionary<Type, object> _store;
-        private Dictionary<Type, Type> _bindings;
+        private Dictionary<Type, Type> typeDict;
 
         /// <summary>
         /// Default constructor; instantiates a new ServiceResolver object.
@@ -18,7 +18,7 @@ namespace VIPContainer
         {
             this.DependencyInjector = new DependencyInjector(this);
             _store = new Dictionary<Type, object>();
-            _bindings = new Dictionary<Type, Type>();
+            typeDict = new Dictionary<Type, Type>();
         }
 
         /// <summary>
@@ -29,17 +29,17 @@ namespace VIPContainer
         {
             this.DependencyInjector = injector;
             _store = new Dictionary<Type, object>();
-            _bindings = new Dictionary<Type, Type>();
+            typeDict = new Dictionary<Type, Type>();
         }
 
         /// <summary>
         /// Registers a pluginType with its corresponding concreteType.
         /// </summary>
-        /// <typeparam name="TFrom">The abstract type or interface to use as a key.</typeparam>
-        /// <typeparam name="TTo">The concrete type to use as a value.</typeparam>
-        public void Register<TPluginType, TConcreteType>()
+        /// <typeparam name="TPluginType">The abstract type or interface to use as a key.</typeparam>
+        /// <typeparam name="TConcreteType">The concrete type to use as a value.</typeparam>
+        public void Register<TPluginType, TConcreteType>() where TPluginType : class where TConcreteType : class
         {
-            _bindings.Add(typeof(TPluginType), typeof(TConcreteType));
+            typeDict.Add(typeof(TPluginType), typeof(TConcreteType));
         }
 
 
@@ -61,11 +61,11 @@ namespace VIPContainer
         public object Resolve(Type fromType)
         {
             // check for registration
-            if (!_bindings.ContainsKey(fromType))
+            if (!typeDict.ContainsKey(fromType))
                 return DependencyInjector.GetInjectedInstance(fromType);
 
             // get destination type
-            Type dest = _bindings[fromType];
+            Type dest = typeDict[fromType];
 
             // check for already requested object
             if (_store.ContainsKey(dest))

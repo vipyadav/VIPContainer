@@ -8,7 +8,7 @@ namespace VIPContainer
 {
     public interface IContainer : IDisposable
     {
-        void Register<TPluginType, TConcreteType>();
+        void Register<TPluginType, TConcreteType>() where TPluginType : class where TConcreteType : class;
         T Resolve<T>();
         object Resolve(Type fromType);
     }
